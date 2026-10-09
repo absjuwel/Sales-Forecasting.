@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Forecasting System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 40px 15px;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #00000015;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        p {
+            text-align: center;
+            color: #64748b;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background: #dcfce7;
+            border-radius: 8px;
+            text-align: center;
+            color: #166534;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 12px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sales Forecasting System</h1>
+        <p>Predict daily sales using Machine Learning</p>
+
+        <form method="POST">
+            <label for="day_of_week">Day of Week</label>
+            <select name="day_of_week" id="day_of_week" required>
+                <option value="0">Monday</option>
+                <option value="1">Tuesday</option>
+                <option value="2">Wednesday</option>
+                <option value="3">Thursday</option>
+                <option value="4">Friday</option>
+                <option value="5">Saturday</option>
+                <option value="6">Sunday</option>
+            </select>
+
+            <label for="month">Month</label>
+            <select name="month" id="month" required>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+
+            <label for="lag_1">Previous Day Sales</label>
+            <input type="number" name="lag_1" id="lag_1"
+                   min="0" step="0.01" required>
+
+            <label for="lag_7">Sales Seven Days Ago</label>
+            <input type="number" name="lag_7" id="lag_7"
+                   min="0" step="0.01" required>
+
+            <label for="model_name">Choose Model</label>
+            <select name="model_name" id="model_name">
+                <option value="linear_regression">Linear Regression</option>
+                <option value="decision_tree">Decision Tree Regression</option>
+                <option value="random_forest">Random Forest Regression</option>
+            </select>
+
+            <button type="submit">Predict Sales</button>
+        </form>
+
+        {% if prediction is not none %}
+        <div class="result">
+            <h2>Predicted Daily Sales</h2>
+            <h3>{{ "%.2f"|format(prediction) }}</h3>
+            <p>Model: {{ selected_model }}</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
